@@ -15,33 +15,58 @@ for byte in lines[:1024]:
 # for l in board:
 #     print(l)
 
+q, seen = deque(), set()
+q.append([1, (0, 0)])
+seen.add((0, 0))
+low = float("inf")
+while q:
+    # print(q)
+    score, pos = q.popleft()
+    for dir in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
+        r, c = tuple(map(sum, zip(pos, dir)))
+        if (r, c) == (size-1, size-1):
+            low = min(low, score)
+            q.clear()
+        elif r in range(size) and c in range(size) and (r, c) not in seen:
+            next = board[r][c]
+            if next == '.':
+                q.append([score+1, (r, c)])
+                seen.add((r, c))
+
+print(f"Part 1: {low}")
+
+# PART 2
 def maze():
     q, seen = deque(), set()
-    q.append([1, (0, 0)])
+    path = set([(0, 0)])
+    q.append([1, (0, 0), path])
     seen.add((0, 0))
-    low = float("inf")
     while q:
         # print(q)
-        score, pos = q.popleft()
+        score, pos, path = q.popleft()
         for dir in [(0, 1), (0, -1), (1, 0), (-1, 0)]:
             r, c = tuple(map(sum, zip(pos, dir)))
             if (r, c) == (size-1, size-1):
-                low = min(low, score)
+                path.add((r, c))
                 q.clear()
             elif r in range(size) and c in range(size) and (r, c) not in seen:
                 next = board[r][c]
+                copy = path.copy()
+                copy.add((r, c))
                 if next == '.':
-                    q.append([score+1, (r, c)])
+                    q.append([score+1, (r, c), copy])
                     seen.add((r, c))
-    return low
+    return path
 
-print(f"Part 1: {maze()}")
-
-# PART 2
 cutoff = 1024
-while maze() != float("inf"):
+path = maze()
+while True:
     x, y = map(int, lines[cutoff].split(','))
     board[y] = board[y][:x] + '#' + board[y][x+1:]
+    if (y, x) in path:
+        path = maze()
     cutoff += 1
+    if (70, 70) not in path:
+        break
 
 print(f"Part 2: {x},{y}")
