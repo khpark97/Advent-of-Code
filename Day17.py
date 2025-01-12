@@ -42,7 +42,6 @@ print(f"Part 1: {','.join(run())}")
 # PART 2
 q = deque()
 q.append((8**15, 1))
-state = 0
 low = float("inf")
 while q:
     j, pointer = q.popleft()
@@ -55,5 +54,5 @@ while q:
             low = min(low, value)
         elif state[-pointer:] == program[-pointer:]:
             q.append((value, pointer+1))
-
+            
 print(f"Part 2: {low}")
