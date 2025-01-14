@@ -45,4 +45,21 @@ for coord in path:
     total += cheat(coord)
 
 print(f"Part 1: {total}")
+
 # PART 2
+twenty = [(r, c) for r in range(-20, 21) for c in range(-20, 21) if abs(r)+abs(c)<=20]
+def cheat_two(curr):
+    shortcuts = 0
+    for dir in twenty:
+        save = sum([abs(i) for i in dir])
+        nr, nc = tuple(map(sum, zip(curr, dir)))
+        if nr in range(len(lines)) and nc in range(len(lines[0])) and lines[nr][nc] == '.':
+            if path[(nr, nc)] - (path[curr] + save) >= 100:
+                shortcuts += 1
+    return shortcuts
+
+total = 0
+for coord in path:
+    total += cheat_two(coord)
+
+print(f"Part 2: {total}")
