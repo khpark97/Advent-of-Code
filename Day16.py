@@ -39,37 +39,72 @@ while q:
 print(f"Part 1: {score}")
 
 # PART 2
+
+lowest = score
+
+paths = []
+start, end = (), ()
+for r in range(len(lines)):
+    for c in range(len(lines[0])):
+        if lines[r][c] == 'S':
+            start = (r, c)
+        elif lines[r][c] == 'E':
+            end = (r, c)
+        elif lines[r][c] == '.':
+            paths.append((r, c))
+
+from_start = {p: float('inf') for p in paths}
+from_start[start] = 0
 score = 0
-q, seen = [], defaultdict(int)
-q.append([0, start, 0, set()])
+q, seen = [], set()
+q.append([0, start, 0])
 dirs = [(0, 1), (-1, 0), (0, -1), (1, 0)]
-tiles = set([start])
-high = float("inf")
 
 while q:
     # print(q)
-    score, curr, d, path_old = heapq.heappop(q)
-    seen[curr] = min(score, seen[curr])
-    path_old.add(curr)
-    if score > high:
-        continue
-    for change in [-1, 0, 1]:
-        path = path_old.copy()
-        dir = (d+change)%4
+    score, curr, d = heapq.heappop(q)
+    seen.add(curr)
+    for dir in range(len(dirs)):
         r, c = tuple(map(sum, zip(curr, dirs[dir])))
-        if (r, c) in seen and seen[(r, c)] + 1001 > score:
-            continue
-        next = lines[r][c]
-        if next == 'E':
-            high = min(high, score+1)
-            path.add((r, c))
-            tiles.update(path)
-            # print(sorted(tiles))
-        elif next == '.':
-            if d == dir:
-                path.add((r, c))
-                heapq.heappush(q, [score+1, (r, c), d, path])
-            else:
-                heapq.heappush(q, [score+1000, curr, dir, path])
-                
-print(f"Part 2: {len(tiles)}")
+        if (r, c) not in seen:
+            next = lines[r][c]
+            if next == '.':
+                if d == dir:
+                    if score + 1 < from_start[(r, c)]:
+                        from_start[(r, c)] = score + 1
+                    heapq.heappush(q, [score+1, (r, c), d])
+                else:
+                    if score + 1001 < from_start[(r, c)]:
+                        from_start[(r, c)] = score + 1001
+                    heapq.heappush(q, [score+1001, (r, c), dir])
+
+path = set(end)
+from_end = {p: float('inf') for p in paths}
+from_end[start] = 0
+score = 0
+q, seen = [], set()
+q.append([0, end, 0])
+q.append([0, end, 1])
+q.append([0, end, 2])
+q.append([0, end, 3])
+dirs = [(0, 1), (-1, 0), (0, -1), (1, 0)]
+
+while q:
+    # print(q)
+    score, curr, d = heapq.heappop(q)
+    seen.add(curr)
+    for dir in range(len(dirs)):
+        r, c = tuple(map(sum, zip(curr, dirs[dir])))
+        if (r, c) not in seen:
+            next = lines[r][c]
+            if next == '.':
+                if d == dir:
+                    if score + 1 < from_end[(r, c)]:
+                        from_end[(r, c)] = score + 1
+                    heapq.heappush(q, [score+1, (r, c), d])
+                else:
+                    if score + 1001 < from_end[(r, c)]:
+                        from_end[(r, c)] = score + 1001
+                    heapq.heappush(q, [score+1001, (r, c), dir])
+
+print(f"Part 2: {len(path)}")

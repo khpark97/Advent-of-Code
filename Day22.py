@@ -22,3 +22,18 @@ for buyer in [int(i) for i in lines]:
 print(f"Part 1: {total}")
 
 # PART 2
+for buyer in [int(i) for i in lines]:
+    prices = [buyer%10]
+    for i in range(9):
+        prod = buyer * 64
+        buyer ^= prod
+        buyer %= 16777216
+        quot = buyer//32
+        buyer ^= quot
+        buyer %= 16777216
+        prod = buyer * 2048
+        buyer ^= prod
+        buyer %= 16777216
+        prices.append(buyer%10)
+    print(prices)
+    break

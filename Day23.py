@@ -26,3 +26,7 @@ for a, b, c in trios:
 print(f"Part 1: {total}")
 
 # PART 2
+
+party = []
+
+print(f"Part 2: {','.join(sorted(party))}")
