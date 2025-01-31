@@ -17,7 +17,7 @@ print(f"Part 1: {total}")
 total = 0
 for line in lines:
     l, r = [([int(x) for x in pair.split('-')]) for pair in line.split(',')]
-    print(l, r)
+
     if l[0] in range(r[0], r[1]+1) or l[1] in range(r[0], r[1]+1) or r[0] in range(l[0], l[1]+1) or r[1] in range(l[0], l[1]+1):
         total += 1
 
