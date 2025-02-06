@@ -51,8 +51,10 @@ business = heapq.nlargest(2, active)
 print(f"Part 1: {business[0] * business[1]}")
 
 # PART 2
+
 monkeys = {}
 i = 0
+modulo = 1
 while i < len(lines):
     num = int(lines[i].split()[1][0])
     items = deque([int(x) for x in lines[i+1][18:].split(', ')])
@@ -62,6 +64,7 @@ while i < len(lines):
     f = int(lines[i+5].split()[-1])
     monkeys[num] = [items, op, div, t, f]
     i += 7
+    modulo *= div
 
 active = [0] * len(monkeys)
 
@@ -78,12 +81,13 @@ def round():
                 item += int(val)
             else:
                 item *= int(val)
+            item %= modulo
             if item % div == 0:
                 monkeys[t][0].append(item)
             else:
                 monkeys[f][0].append(item)
 
-for k in range(20):
+for k in range(10000):
     round()
     # for m in monkeys:
     #     print(f"Monkey {m}: {monkeys[m][0]}")
