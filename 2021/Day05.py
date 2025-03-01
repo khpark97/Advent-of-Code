@@ -30,19 +30,13 @@ print(f"Part 1: {score}")
 
 for line in lines:
     start, end = [[int(i) for i in x.split(',')] for x in line.split(' -> ')]
-    if start[0] != end[0] and start[1] != end[1]:
-        if end[0] > start[0] and end[1] > start[1]: #0,0 - 8,8
-            for i in range(end[0] + 1 - start[0]):
-                field[start[1] + i][start[0] + i] += 1
-        elif end[0] < start[0] and end[1] > start[1]: #8,0 - 0,8
-            for i in range(end[1] + 1 - start[1]):
-                field[start[1] + i][start[0] - i] += 1
-        elif end[0] < start[0] and end[1] < start[1]: #6,4 - 2,0
-            for i in range(start[1] + 1 - end[1]):
-                field[start[1] - i][start[0] - i] += 1
-        else: #5,5 - 8,2
-            for i in range(end[0] + 1 - start[0]):
-                field[start[1] - i][start[0] + i] += 1        
+    if start[0] != end[0] and start[1] != end[1]:  # Diagonal lines only
+        dx = 1 if end[0] > start[0] else -1  # Step direction for x
+        dy = 1 if end[1] > start[1] else -1  # Step direction for y
+        length = abs(end[0] - start[0])  # Number of steps
+        
+        for i in range(length + 1):  # Include the last point
+            field[start[1] + i * dy][start[0] + i * dx] += 1      
 
 score = 0
 for r in range(len(field)):
