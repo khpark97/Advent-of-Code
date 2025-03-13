@@ -5,22 +5,17 @@ data = file.read()
 # PART 1
 
 floor = 0
-for c in data:
-    match c:
-        case '(': floor += 1
-        case ')': floor -= 1
-
-print(f"Part 1: {floor}")
-
-# PART 2
-
-floor = 0
+basement = -1
 for i in range(len(data)):
     if data[i] == '(':
         floor += 1
     elif data[i] == ')':
         floor -= 1
-    if floor == -1:
-        break
+    if floor == -1 and basement == -1:
+        basement = i + 1
 
-print(f"Part 2: {i + 1}")
+print(f"Part 1: {floor}")
+
+# PART 2
+
+print(f"Part 2: {basement}")
