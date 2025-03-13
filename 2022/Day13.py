@@ -48,6 +48,12 @@ print(f"Part 1: {score}")
 
 # PART 2
 
+left, right = [], []
+i = 0
+while i < len(lines):
+    left.append(eval(lines[i]))
+    right.append(eval(lines[i+1]))
+    i += 3
 
 
 print(f"Part 2: {score}")

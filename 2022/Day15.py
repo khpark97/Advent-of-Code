@@ -17,19 +17,20 @@ def mh(a, b):
 
 target = 2000000
 positions = set()
-for i in range(len(sensors)):
-    s, b = sensors[i], beacons[i]
-    diff = mh(s, b) - abs(target - s[1])
-    if diff >= 0:
-        for j in range(s[0] - diff, s[0] + diff + 1):
-            pos = (j, target)
-            if pos not in beacons and pos not in sensors:
-                positions.add((j, target))
+# for i in range(len(sensors)):
+#     s, b = sensors[i], beacons[i]
+#     diff = mh(s, b) - abs(target - s[1])
+#     if diff >= 0:
+#         for j in range(s[0] - diff, s[0] + diff + 1):
+#             pos = (j, target)
+#             if pos not in beacons and pos not in sensors:
+#                 positions.add((j, target))
 
 print(f"Part 1: {len(positions)}")
 
 # PART 2
 
-
+sensors, beacons = zip(*sorted(zip(sensors, beacons)))
+print(sensors, beacons)
 
 print(f"Part 2: {len(positions)}")
