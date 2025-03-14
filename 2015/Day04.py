@@ -1,8 +1,3 @@
-## STARTER CODE
-file = open('2015/Day04_data.txt', 'r')
-data = file.read()
-lines = data.splitlines()
-
 # PART 1
 
 import hashlib
