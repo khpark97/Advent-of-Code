@@ -1,12 +1,16 @@
+## STARTER CODE
+file = open('2015/Day04_data.txt', 'r')
+data = file.read()
+
 # PART 1
 
 import hashlib
 
-secret_key = 'iwrupvqb'
+secret_key = data
 
 parts = {'00000': float('inf'), '000000': float('inf')}
 
-for start in ['00000', '000000']:
+for start in parts:
     i = 0
     key = secret_key + str(i)
     encoded_string = key.encode('utf-8')
