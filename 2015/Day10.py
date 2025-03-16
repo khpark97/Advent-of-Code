@@ -1,16 +1,31 @@
 ## STARTER CODE
 file = open('2015/Day10_data.txt', 'r')
 data = file.read()
-lines = data.splitlines()
 
 # PART 1
 
+digits = []
+res = data
+def say(sequence):
+    i = 0
+    next = ''
+    while i < len(sequence):
+        c = sequence[i]
+        count = 0
+        while i < len(sequence) and sequence[i] == c:
+            count += 1
+            i += 1
+        next += str(count) + c
+    return next
 
+for _ in range(40):
+    res = say(res)
 
-print(f"Part 1: {score}")
+print(f"Part 1: {len(res)}")
 
 # PART 2
 
+for _ in range(10):
+    res = say(res)
 
-
-print(f"Part 2: {score}")
+print(f"Part 2: {len(res)}")
