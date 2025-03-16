@@ -4,19 +4,19 @@ data = file.read()
 
 # PART 1
 
-digits = []
 res = data
 def say(sequence):
     i = 0
-    next = ''
+    next = []
     while i < len(sequence):
         c = sequence[i]
         count = 0
         while i < len(sequence) and sequence[i] == c:
             count += 1
             i += 1
-        next += str(count) + c
-    return next
+        next.append(str(count))
+        next.append(c)
+    return ''.join(next)
 
 for _ in range(40):
     res = say(res)
