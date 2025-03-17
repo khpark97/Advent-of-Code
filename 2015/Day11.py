@@ -6,23 +6,29 @@ file = open('2015/Day11_data.txt', 'r')
 pw = file.read()
 
 def increment(curr):
-    if curr[-1] == 'z':
-        return increment(curr[:-1]) + 'a'
-    return curr[:-1] + chr((ord(curr[-1]) - 70) % 26 + 97)
+    curr = list(curr)
+    i = len(curr) - 1
+    while i >= 0:
+        if curr[i] == 'z':
+            curr[i] = 'a'
+            i -= 1
+        else:
+            curr[i] = chr(ord(curr[i]) + 1)
+            break
+    return ''.join(curr)
 
 def next(curr):
-    curr = increment(curr)
     while True:
+        curr = increment(curr)
         if any(['i', 'o', 'l']) in list(curr):
-            curr = increment(curr)
             continue
 
         three = False
         for i in range(len(curr) - 2):
             if ord(curr[i]) == ord(curr[i+1])-1 == ord(curr[i+2])-2:
                 three = True
+                break
         if not three:
-            curr = increment(curr)
             continue
 
         pair, j = 0, 0
@@ -32,7 +38,6 @@ def next(curr):
                 j += 1
             j += 1
         if pair < 2:
-            curr = increment(curr)
             continue
 
         return curr
