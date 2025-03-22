@@ -30,6 +30,32 @@ print(f"Part 1: {len(distinct)}")
 
 # PART 2
 
+from collections import deque
+import re
 
+def replace(c, seq, replace):
+    uniques = []
+    for i in range(len(c) - len(seq)):
+        if c[i:i+len(seq)] == seq:
+            uniques.append(''.join([c[:i], replace, c[i+len(seq):]]))
+    return uniques
 
-print(f"Part 2: {len(distinct)}")
+def dfs():
+    q = deque([(0, molecule)])
+    seen = set([molecule])
+    while q:
+        steps, curr = q.popleft()
+        for r, seqs in replacements.items():
+            for s in seqs:
+                if s in curr:
+                    for replaced in replace(curr, s, r):
+                        if replaced == 'e':
+                            return steps
+                        if replaced not in seen:
+                            q.appendleft((steps + 1, replaced))
+        if len(curr)<25:
+            print(curr)
+            break
+    return -1
+
+print(f"Part 2: {dfs()}")
