@@ -32,5 +32,6 @@ for j in range(len(houses)):
     if houses[j] > presents:
         house = j
         break
+    
 
 print(f"Part 2: {house}")
