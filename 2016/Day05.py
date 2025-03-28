@@ -26,7 +26,7 @@ while -1 in res_p2:
         pos = int(hex[5])
         if res_p2[pos] == -1:
             res_p2[pos] = hex[6]
-    print(hex, res_p1, res_p2)
+    # print(hex, res_p1, res_p2) #DEBUGGER
 
 print(f"Part 1: {''.join(res_p1[:8])}")
 
