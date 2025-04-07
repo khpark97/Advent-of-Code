@@ -66,5 +66,6 @@ for p in permutations(password):
     p = list(p)
     if scramble(p) == 'fbgdceah':
         start = ''.join(p)
+        break
 
 print(f"Part 2: {start}")
