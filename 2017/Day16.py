@@ -32,5 +32,17 @@ print(f"Part 1: {''.join(danced)}")
 
 # PART 2
 
+reset = 0
+seen = set()
+order = ''.join(programs)
+
+while order not in seen:
+    seen.add(order)
+    programs = dance(programs)
+    order = ''.join(programs)
+    reset += 1
+    
+for _ in range(1000000000 % reset):
+    programs = dance(programs)
 
 print(f"Part 2: {''.join(programs)}")
